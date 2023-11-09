@@ -8,3 +8,7 @@ class Recipe:
         self.instructions = instructions
         self.category = category
         self.rating = rating
+
+class RecipeManagementSystem:
+    def __init__(self):
+        self.recipes=[]
