@@ -13,28 +13,17 @@ class RecipeManagementSystem:
     def __init__(self):
         self.recipes=[]
         
-    def view_recipes(self):
-        if not self.recipes:
-            print("No recipes found.")
+    def display_all_recipes(self):
+        print("All Recipes:")
+        for recipe in self.recipes:
+            print(f"{recipe.id}. {recipe.name} - Category: {recipe.category}, Rating: {recipe.rating}")
+            
+    def search_by_keyword(self, keyword):
+        matching_recipes = [recipe for recipe in self.recipes if keyword.lower() in recipe.name.lower()]
+        if matching_recipes:
+            print(f"Recipes containing '{keyword}':")
+            for recipe in matching_recipes:
+                print(f"{recipe.id}. {recipe.name} - Category: {recipe.category}, Rating: {recipe.rating}")
         else:
-            print("View Recipes\n")
-            print("1. Display all recipes")
-            print("2. Search by keyword")
-            print("3. Filter by category")
-            print("4. Filter by rating")
-
-            choice = input("Enter your choice: ")
-
-            if choice == '1':
-                self.display_all_recipes()
-            elif choice == '2':
-                keyword = input("Enter a keyword to search for: ")
-                self.search_by_keyword(keyword)
-            elif choice == '3':
-                category = input("Enter a category to filter by: ")
-                self.filter_by_category(category)
-            elif choice == '4':
-                rating = input("Enter a rating to filter by (1-5): ")
-                self.filter_by_rating(rating)
-            else:
-                print("Invalid choice.")
+            print(f"No recipes found containing '{keyword}'.")            
+    
