@@ -25,5 +25,14 @@ class RecipeManagementSystem:
             for recipe in matching_recipes:
                 print(f"{recipe.id}. {recipe.name} - Category: {recipe.category}, Rating: {recipe.rating}")
         else:
-            print(f"No recipes found containing '{keyword}'.")            
+            print(f"No recipes found containing '{keyword}'.")  
+             
+    def filter_by_category(self, category):
+        matching_recipes = [recipe for recipe in self.recipes if category.lower() == recipe.category.lower()]
+        if matching_recipes:
+            print(f"Recipes in category '{category}':")
+            for recipe in matching_recipes:
+                print(f"{recipe.id}. {recipe.name} - Rating: {recipe.rating}")
+        else:
+            print(f"No recipes found in category '{category}'.")        
     
