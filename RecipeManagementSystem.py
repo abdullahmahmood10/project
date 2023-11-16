@@ -194,3 +194,39 @@ class RecipeManagementSystem:
                     print(f"Imported recipe '{imported_recipe.name}' with ID {imported_recipe.id}.")
 
         print("Recipes imported successfully!")
+
+    def main(self):
+        while True:
+            print("\nRecipe Management System\n")
+            print("1. View recipes")
+            print("2. Add recipe")
+            print("3. Edit recipe")
+            print("4. Delete recipe")
+            print("5. Export recipes")
+            print("6. Import recipes")
+            print("7. Exit")
+
+            choice = input("Enter your choice: ")
+
+            if choice == '1':
+                self.view_recipes()
+            elif choice == '2':
+                self.add_recipe()
+            elif choice == '3':
+                self.edit_recipe()
+            elif choice == '4':
+                self.delete_recipe()
+            elif choice == '5':
+                self.export_recipes()
+            elif choice == '6':
+                self.import_recipes()
+            elif choice == '7':
+                print("Exiting program. Goodbye!")
+                break
+            else:
+                print("Invalid choice. Please enter a number between 1 and 7.")
+
+if __name__ == "__main__":
+    recipe_system = RecipeManagementSystem()
+    recipe_system.main()
+
