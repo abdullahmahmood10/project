@@ -120,6 +120,17 @@ class RecipeManagementSystem:
         else:
             print("Recipe not found.")
 
+    def export_recipes(self):
+        if not self.recipes:
+            print("No recipes found. There is nothing to export")
+            return
+        with open('recipes.csv', 'w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(['ID', 'Name', 'Ingredients', 'Instructions', 'Category', 'Rating'])
+            for recipe in self.recipes:
+                writer.writerow([recipe.id, recipe.name, ', '.join(recipe.ingredients), recipe.instructions, recipe.category, recipe.rating])
+        print("Recipes exported to recipes.csv")
+        
     def import_recipes(self):
         with open('recipes.csv', 'r') as file:
             reader = csv.reader(file)
