@@ -120,3 +120,31 @@ class RecipeManagementSystem:
         else:
             print("Recipe not found.")
 
+    def export_recipes(self):
+        if not self.recipes:
+            print("No recipes found. There is nothing to export")
+            return
+        with open('recipes.csv', 'w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(['ID', 'Name', 'Ingredients', 'Instructions', 'Category', 'Rating'])
+            for recipe in self.recipes:
+                writer.writerow([recipe.id, recipe.name, ', '.join(recipe.ingredients), recipe.instructions, recipe.category, recipe.rating])
+        print("Recipes exported to recipes.csv")
+        
+    def import_recipes(self):
+        with open('recipes.csv', 'r') as file:
+            reader = csv.reader(file)
+            next(reader)
+
+            for row in reader:
+                recipe_name = row[1]
+                existing_recipe = next((r for r in self.recipes if r.name == recipe_name), None)
+
+                if existing_recipe:
+                    print(f"Recipe with name {recipe_name} already exists. Skipping import.")
+                else:
+                    imported_recipe = Recipe(row[1], row[2].split(', '), row[3], row[4], row[5])
+                    self.recipes.append(imported_recipe)
+                    print(f"Imported recipe '{imported_recipe.name}' with ID {imported_recipe.id}.")
+
+        print("Recipes imported successfully!")
