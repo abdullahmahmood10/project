@@ -120,6 +120,52 @@ class RecipeManagementSystem:
         else:
             print("Recipe not found.")
 
+    def edit_recipe(self):
+        if not self.recipes:
+            print("No recipes found.")
+            return
+        self.display_all_recipes()
+        recipe_id = int(input("Enter the ID of the recipe to edit (or enter '0' to go back): "))
+
+        if recipe_id == 0:
+            return
+
+        recipe = next((r for r in self.recipes if r.id == recipe_id), None)
+
+        if recipe:
+            print(f"Editing recipe: {recipe.name}")
+
+            # Check if a recipe with the same name already exists (excluding the current recipe)
+            while True:
+                new_name = input(f"Enter new recipe name ({recipe.name}): ") or recipe.name
+                if new_name.lower() == recipe.name.lower():
+                    break  # The name remains the same
+                existing_recipe = next((r for r in self.recipes if r.name.lower() == new_name.lower() and r.id != recipe_id), None)
+                if existing_recipe:
+                    print(f"A recipe with the name '{new_name}' already exists. Please choose a different name.")
+                else:
+                    recipe.name = new_name
+                    break
+
+            recipe.ingredients = input(f"Enter new ingredients ({', '.join(recipe.ingredients)}): ").split(',') or recipe.ingredients
+            recipe.instructions = input(f"Enter new instructions ({recipe.instructions}): ") or recipe.instructions
+            recipe.category = input(f"Enter new category ({recipe.category}): ") or recipe.category
+
+            while True:
+                try:
+                    recipe.rating = int(input(f"Enter new rating (1-5) ({recipe.rating}): ")) or recipe.rating
+                    if 1 <= recipe.rating <= 5:
+                        break
+                    else:
+                        print("Rating must be between 1 and 5. Please try again.")
+                except ValueError:
+                    print("Invalid input. Rating must be a number between 1 and 5.")
+
+            print("Recipe edited successfully!")
+        else:
+            print("Recipe not found.")
+
+
     def export_recipes(self):
         if not self.recipes:
             print("No recipes found. There is nothing to export")
