@@ -120,3 +120,20 @@ class RecipeManagementSystem:
         else:
             print("Recipe not found.")
 
+    def import_recipes(self):
+        with open('recipes.csv', 'r') as file:
+            reader = csv.reader(file)
+            next(reader)
+
+            for row in reader:
+                recipe_name = row[1]
+                existing_recipe = next((r for r in self.recipes if r.name == recipe_name), None)
+
+                if existing_recipe:
+                    print(f"Recipe with name {recipe_name} already exists. Skipping import.")
+                else:
+                    imported_recipe = Recipe(row[1], row[2].split(', '), row[3], row[4], row[5])
+                    self.recipes.append(imported_recipe)
+                    print(f"Imported recipe '{imported_recipe.name}' with ID {imported_recipe.id}.")
+
+        print("Recipes imported successfully!")
