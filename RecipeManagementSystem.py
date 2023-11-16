@@ -34,5 +34,21 @@ class RecipeManagementSystem:
             for recipe in matching_recipes:
                 print(f"{recipe.id}. {recipe.name} - Rating: {recipe.rating}")
         else:
-            print(f"No recipes found in category '{category}'.")        
+            print(f"No recipes found in category '{category}'.")      
+
+    def filter_by_rating(self, rating):
+        try:
+            rating = int(rating)
+            if 1 <= rating <= 5:
+                matching_recipes = [recipe for recipe in self.recipes if recipe.rating == rating]
+                if matching_recipes:
+                    print(f"Recipes with rating {rating}:")
+                    for recipe in matching_recipes:
+                        print(f"{recipe.id}. {recipe.name} - Category: {recipe.category}")
+                else:
+                    print(f"No recipes found with rating {rating}.")
+            else:
+                print("Invalid rating. Please enter a number between 1 and 5.")
+        except ValueError:
+            print("Invalid input. Rating must be a number between 1 and 5.")  
     
