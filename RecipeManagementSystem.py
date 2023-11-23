@@ -1,8 +1,10 @@
-import random 
+import csv 
 
 class Recipe:
+    recipe_id_counter = 1
     def __init__ (self,recipe_id, name, ingredients, instructions, category, rating):
-        self.id = recipe_id
+        self.id = Recipe.recipe_id_counter
+        Recipe.recipe_id_counter += 1
         self.name = name
         self.ingredients = ingredients
         self.instructions = instructions
@@ -135,11 +137,11 @@ class RecipeManagementSystem:
         if recipe:
             print(f"Editing recipe: {recipe.name}")
 
-            # Check if a recipe with the same name already exists (excluding the current recipe)
+            
             while True:
                 new_name = input(f"Enter new recipe name ({recipe.name}): ") or recipe.name
                 if new_name.lower() == recipe.name.lower():
-                    break  # The name remains the same
+                    break  
                 existing_recipe = next((r for r in self.recipes if r.name.lower() == new_name.lower() and r.id != recipe_id), None)
                 if existing_recipe:
                     print(f"A recipe with the name '{new_name}' already exists. Please choose a different name.")
