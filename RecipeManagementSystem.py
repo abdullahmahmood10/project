@@ -2,7 +2,7 @@ import csv
 
 class Recipe:
     recipe_id_counter = 1
-    def __init__ (self,recipe_id, name, ingredients, instructions, category, rating):
+    def __init__ (self, name, ingredients, instructions, category, rating):
         self.id = Recipe.recipe_id_counter
         Recipe.recipe_id_counter += 1
         self.name = name
