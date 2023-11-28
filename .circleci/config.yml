@@ -9,7 +9,7 @@ jobs:
     steps:
       - checkout
 
-      # Install dependencies including pytest and pytest-cov
+      
       - run:
           name: Install dependencies
           command: |
@@ -18,7 +18,7 @@ jobs:
             pip install --upgrade pip
             pip install -r requirements.txt
 
-      # Run tests with coverage
+      
       - run:
           name: Run tests with coverage
           command: |
