@@ -32,3 +32,24 @@ class TestRecipeManagementSystem(unittest.TestCase):
             self.assertEqual(edited_recipe.instructions, "1. Cook patty 2. Assemble ingredients with cheese")
             self.assertEqual(edited_recipe.category, "Fast Food")
             self.assertEqual(edited_recipe.rating, 5)
+
+    def test_search_by_keyword(self):
+        test_recipe = Recipe("Chocolate Cake", ["Flour", "Sugar", "Cocoa Powder"], "1. Mix dry ingredients 2. Add wet ingredients 3. Bake", "Dessert", 4)
+        self.testing.recipes.append(test_recipe)
+
+        with patch('builtins.input', side_effect=["Chocolate"]):
+            self.testing.search_by_keyword("Chocolate")
+
+    def test_filter_by_category(self):
+        test_recipe = Recipe("Caesar Salad", ["Lettuce", "Croutons", "Chicken", "Caesar Dressing"], "1. Mix all ingredients", "Salad", 5)
+        self.testing.recipes.append(test_recipe)
+
+        with patch('builtins.input', side_effect=["Salad"]):
+            self.testing.filter_by_category("Salad")
+
+    def test_filter_by_rating(self):
+        test_recipe = Recipe("Smoothie", ["Banana", "Berries", "Yogurt", "Milk"], "1. Blend all ingredients", "Beverage", 3)
+        self.testing.recipes.append(test_recipe)
+
+        with patch('builtins.input', side_effect=[3]):
+            self.testing.filter_by_rating(3)
