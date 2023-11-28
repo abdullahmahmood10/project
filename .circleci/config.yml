@@ -12,5 +12,5 @@ jobs:
       - run:
           name: Run pytest
           command: |
-            pytest ../test_Recipe_Management_System.py
-            pytest ../test_exception_Recipe_Management_System.py
+            pytest test_Recipe_Management_System.py
+            pytest test_exception_Recipe_Management_System.py
