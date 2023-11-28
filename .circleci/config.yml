@@ -13,8 +13,8 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            python -m venv venv
-            source venv/bin/activate
+            python3 -m venv venv
+            . venv/bin/activate
             pip install --upgrade pip
             pip install -r requirements.txt
 
@@ -22,5 +22,5 @@ jobs:
       - run:
           name: Run tests with coverage
           command: |
-            source venv/bin/activate
+            . venv/bin/activate
             pytest -s -v --cov=RecipeManagementSystem
