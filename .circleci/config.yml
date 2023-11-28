@@ -1,19 +1,46 @@
 version: 2.1
+
 jobs:
   build:
     docker:
-      - image: circleci/python:3.7 
+      - image: circleci/python:3.7
+
     working_directory: /home/circleci/project
+
     steps:
-      - checkout  
+      - checkout
+
+      # Print current directory for debugging
+      - run:
+          name: Print Current Directory
+          command: pwd
+
+      # Print content of the current directory for debugging
+      - run:
+          name: List Files in Current Directory
+          command: ls
+
+      # Install dependencies
       - run:
           name: Install Dependencies
           command: |
+            python -m venv venv
+            source venv/bin/activate
+            pip install --upgrade pip
             pip install -r requirements.txt
+
+      # Run pytest without coverage for debugging
       - run:
-          name: Run pytest
-          command: |
-            pytest /home/circleci/project/test_Recipe_Management_System
-            pytest /home/circleci/project/test_exception_Recipe_Management_System
-            pwd
-            ls
+          name: Run Pytest without Coverage
+          command: pytest test_Recipe_Management_System.py
+
+      # Run pytest with coverage
+      - run:
+          name: Run Pytest with Coverage
+          command: pytest --cov=RecipeManagementSystem test_Recipe_Management_System.py
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
