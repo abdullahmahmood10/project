@@ -19,3 +19,16 @@ class TestRecipeManagementSystem(unittest.TestCase):
         with patch('builtins.input', side_effect=[test_recipe.id]):
             self.testing.delete_recipe()
             self.assertEqual(len(self.testing.recipes), 0)
+
+    def test_edit_recipe(self):
+        test_recipe = Recipe("Burger", ["Beef Patty", "Bun", "Lettuce", "Tomato"], "1. Cook patty 2. Assemble ingredients", "Fast Food", 4)
+        self.testing.recipes.append(test_recipe)
+        with patch('builtins.input', side_effect=[test_recipe.id, "Cheeseburger", "Beef Patty, Bun, Lettuce, Tomato, Cheese", "1. Cook patty 2. Assemble ingredients with cheese", "Fast Food", 5]):
+            self.testing.edit_recipe()
+            edited_recipe = self.testing.recipes[0]
+            expected_ingredients = ["Beef Patty", "Bun", "Lettuce", "Tomato", "Cheese"]
+            self.assertEqual(edited_recipe.name, "Cheeseburger")
+            self.assertEqual([ingredient.strip() for ingredient in edited_recipe.ingredients], expected_ingredients)
+            self.assertEqual(edited_recipe.instructions, "1. Cook patty 2. Assemble ingredients with cheese")
+            self.assertEqual(edited_recipe.category, "Fast Food")
+            self.assertEqual(edited_recipe.rating, 5)
