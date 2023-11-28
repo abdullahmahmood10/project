@@ -4,7 +4,7 @@ from RecipeManagementSystem import RecipeManagementSystem, Recipe
 
 class TestRecipeManagementSystem(unittest.TestCase):
 
-    def build(self):
+    def setUp(self):
         self.testing = RecipeManagementSystem()
 
     def test_add_recipe(self):
