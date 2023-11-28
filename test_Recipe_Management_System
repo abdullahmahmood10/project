@@ -38,3 +38,10 @@ class TestRecipeManagementSystem(unittest.TestCase):
             self.testing.add_recipe()
 
         self.testing.export_recipes()
+        
+    def test_import_recipes(self):
+        with patch('builtins.input', side_effect=["Lasagna", "Beef, Tomato Sauce, Pasta, Cheese", "Layer everything", "Italian", 4]):
+            self.testing.add_recipe()
+
+        self.testing.export_recipes()
+        self.testing.import_recipes()
