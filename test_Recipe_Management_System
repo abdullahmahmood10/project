@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import patch
-from Recipe_Management_system import RecipeManagementSystem, Recipe
+from RecipeManagementSystem import RecipeManagementSystem, Recipe
 
 class TestRecipeManagementSystem(unittest.TestCase):
 
@@ -50,3 +50,4 @@ class TestRecipeManagementSystem(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
