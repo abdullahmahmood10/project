@@ -1,8 +1,0 @@
-import unittest
-from unittest.mock import patch
-from RecipeManagementSystem import RecipeManagementSystem, Recipe
-
-class TestRecipeManagementSystem(unittest.TestCase):
-    
-    def build(self):
-        self.testing = RecipeManagementSystem()
