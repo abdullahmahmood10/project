@@ -32,3 +32,22 @@ class TestRecipeManagementSystem(unittest.TestCase):
             self.assertEqual(edited_recipe.instructions, "1. Cook patty 2. Assemble ingredients with cheese")
             self.assertEqual(edited_recipe.category, "Fast Food")
             self.assertEqual(edited_recipe.rating, 5)
+
+    def test_export_recipes(self):
+        with patch('builtins.input', side_effect=["Lasagna", "Beef, Tomato Sauce, Pasta, Cheese", "Layer everything", "Italian", 4]):
+            self.testing.add_recipe()
+
+        self.testing.export_recipes()
+        
+    def test_import_recipes(self):
+        with patch('builtins.input', side_effect=["Lasagna", "Beef, Tomato Sauce, Pasta, Cheese", "Layer everything", "Italian", 4]):
+            self.testing.add_recipe()
+
+        self.testing.export_recipes()
+        self.testing.import_recipes()
+        
+        
+
+if __name__ == '__main__':
+    unittest.main()
+
