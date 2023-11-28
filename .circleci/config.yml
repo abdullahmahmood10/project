@@ -1,4 +1,3 @@
-# Python CircleCI 2.0 configuration file
 version: 2
 jobs:
   build:
@@ -8,18 +7,20 @@ jobs:
     working_directory: ~/repo
 
     steps:
-      # Step 1: obtain repo from GitHub
       - checkout
-      # Step 2: create virtual env and install dependencies
+
+      # Install dependencies including pytest and pytest-cov
       - run:
-          name: install dependencies
+          name: Install dependencies
           command: |
-            python3 -m venv venv
-            . venv/bin/activate
+            python -m venv venv
+            source venv/bin/activate
+            pip install --upgrade pip
             pip install -r requirements.txt
-      # Step 3: run linter and tests
+
+      # Run tests with coverage
       - run:
-          name: run tests
+          name: Run tests with coverage
           command: |
-            . venv/bin/activate
-            pytest -s -v --cov
+            source venv/bin/activate
+            pytest -s -v --cov=RecipeManagementSystem
