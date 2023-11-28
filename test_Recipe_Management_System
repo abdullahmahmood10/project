@@ -45,3 +45,8 @@ class TestRecipeManagementSystem(unittest.TestCase):
 
         self.testing.export_recipes()
         self.testing.import_recipes()
+        
+        
+
+if __name__ == '__main__':
+    unittest.main()
