@@ -1,46 +1,25 @@
-version: 2.1
-
+# Python CircleCI 2.0 configuration file
+version: 2
 jobs:
   build:
     docker:
       - image: circleci/python:3.7
 
-    working_directory: /home/circleci/project
+    working_directory: ~/repo
 
     steps:
+      # Step 1: obtain repo from GitHub
       - checkout
-
-      # Print current directory for debugging
+      # Step 2: create virtual env and install dependencies
       - run:
-          name: Print Current Directory
-          command: pwd
-
-      # Print content of the current directory for debugging
-      - run:
-          name: List Files in Current Directory
-          command: ls
-
-      # Install dependencies
-      - run:
-          name: Install Dependencies
+          name: install dependencies
           command: |
-            python -m venv venv
-            source venv/bin/activate
-            pip install --upgrade pip
+            python3 -m venv venv
+            . venv/bin/activate
             pip install -r requirements.txt
-
-      # Run pytest without coverage for debugging
+      # Step 3: run linter and tests
       - run:
-          name: Run Pytest without Coverage
-          command: pytest test_Recipe_Management_System.py
-
-      # Run pytest with coverage
-      - run:
-          name: Run Pytest with Coverage
-          command: pytest --cov=RecipeManagementSystem test_Recipe_Management_System.py
-
-workflows:
-  version: 2
-  build_and_test:
-    jobs:
-      - build
+          name: run tests
+          command: |
+            . venv/bin/activate
+            pytest -s -v --cov
