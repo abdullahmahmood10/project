@@ -6,3 +6,16 @@ class TestRecipeManagementSystem(unittest.TestCase):
 
     def build(self):
         self.testing = RecipeManagementSystem()
+
+    def test_add_recipe(self):
+        with patch('builtins.input', side_effect=["Lasagna", "Beef, Tomato Sauce, Pasta, Cheese", "Layer everything", "Italian", 4]):
+            self.testing.add_recipe()
+            self.assertEqual(len(self.testing.recipes), 1)
+
+    def test_delete_recipe(self):
+        test_recipe = Recipe("Spaghetti", ["Pasta", "Tomato Sauce", "Meatballs"], "Boil pasta, cook sauce, add meatballs", "Italian", 5)
+        self.testing.recipes.append(test_recipe)
+        
+        with patch('builtins.input', side_effect=[test_recipe.id]):
+            self.testing.delete_recipe()
+            self.assertEqual(len(self.testing.recipes), 0)
