@@ -15,3 +15,5 @@ jobs:
           command: |
             pytest /home/circleci/project/test_Recipe_Management_System
             pytest /home/circleci/project/test_exception_Recipe_Management_System
+            pwd
+            ls
