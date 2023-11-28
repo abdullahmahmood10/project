@@ -6,3 +6,8 @@ class TestRecipeManagementSystem(unittest.TestCase):
     
     def build(self):
         self.testing = RecipeManagementSystem()
+        
+    def test_view_recipes(self):
+        # It should raise an exception because there are no recipes to view
+        with self.assertRaises(Exception):
+            self.testing.view_recipes()
