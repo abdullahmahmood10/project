@@ -20,6 +20,7 @@ class RecipeManagementSystem:
         for recipe in self.recipes:
             print(f"{recipe.id}. {recipe.name} - Category: {recipe.category}, Rating: {recipe.rating}")
             
+            
     def search_by_keyword(self, keyword):
         matching_recipes = [recipe for recipe in self.recipes if keyword.lower() in recipe.name.lower()]
         if matching_recipes:
@@ -27,8 +28,9 @@ class RecipeManagementSystem:
             for recipe in matching_recipes:
                 print(f"{recipe.id}. {recipe.name} - Category: {recipe.category}, Rating: {recipe.rating}")
         else:
-            print(f"No recipes found containing '{keyword}'.")  
+            print(f"No recipes found containing '{keyword}'.") 
              
+            
     def filter_by_category(self, category):
         matching_recipes = [recipe for recipe in self.recipes if category.lower() == recipe.category.lower()]
         if matching_recipes:
@@ -36,8 +38,9 @@ class RecipeManagementSystem:
             for recipe in matching_recipes:
                 print(f"{recipe.id}. {recipe.name} - Rating: {recipe.rating}")
         else:
-            print(f"No recipes found in category '{category}'.")      
-
+            print(f"No recipes found in category '{category}'.")
+        
+    
     def filter_by_rating(self, rating):
         try:
             rating = int(rating)
@@ -54,10 +57,11 @@ class RecipeManagementSystem:
         except ValueError:
             print("Invalid input. Rating must be a number between 1 and 5.")  
             
-            
+
+                
     def view_recipes(self):
         if not self.recipes:
-            print("No recipes found.")
+            raise Exception("No recipes found.")
         else:
             print("View Recipes\n")
             print("1. Display all recipes")
@@ -88,7 +92,7 @@ class RecipeManagementSystem:
         existing_recipe = next((r for r in self.recipes if r.name.lower() == name.lower()), None)
 
         if existing_recipe:
-            print(f"A recipe with the name '{name}' already exists. Please choose a different name.")
+            raise Exception(f"A recipe with the name '{name}' already exists. Please choose a different name.")
         else:
             ingredients = input("Enter ingredients (comma-separated): ").split(',')
             instructions = input("Enter instructions: ")
@@ -100,7 +104,7 @@ class RecipeManagementSystem:
                     if 1 <= rating <= 5:
                         break
                     else:
-                        print("Rating must be between 1 and 5. Please try again.")
+                        print("Rating must be between 1 and 5 !")
                 except ValueError:
                     print("Invalid input. Rating must be a number between 1 and 5.")
 
@@ -108,10 +112,11 @@ class RecipeManagementSystem:
             self.recipes.append(recipe)
             print(f"Recipe '{recipe.name}' with ID {recipe.id} added successfully!")
 
+            
+            
     def delete_recipe(self):
         if not self.recipes:
-            print("No recipes found.")
-            return
+            raise Exception("No recipes found.")
         self.display_all_recipes()
         recipe_id = int(input("Enter the ID of the recipe to delete: "))
         recipe = next((r for r in self.recipes if r.id == recipe_id), None)
@@ -120,12 +125,13 @@ class RecipeManagementSystem:
             self.recipes.remove(recipe)
             print(f"Deleted recipe: {recipe.name}")
         else:
-            print("Recipe not found.")
+            raise Exception("Recipe not found.")
 
+
+            
     def edit_recipe(self):
         if not self.recipes:
             print("No recipes found.")
-            return
         self.display_all_recipes()
         recipe_id = int(input("Enter the ID of the recipe to edit (or enter '0' to go back): "))
 
@@ -179,23 +185,29 @@ class RecipeManagementSystem:
                 writer.writerow([recipe.id, recipe.name, ', '.join(recipe.ingredients), recipe.instructions, recipe.category, recipe.rating])
         print("Recipes exported to recipes.csv")
         
+        
     def import_recipes(self):
-        with open('recipes.csv', 'r') as file:
-            reader = csv.reader(file)
-            next(reader)
+        try:
+            with open('recipes.csv', 'r') as file:
+                reader = csv.reader(file)
+                next(reader)
 
-            for row in reader:
-                recipe_name = row[1]
-                existing_recipe = next((r for r in self.recipes if r.name == recipe_name), None)
+                for row in reader:
+                    recipe_name = row[1]
+                    existing_recipe = next((r for r in self.recipes if r.name == recipe_name), None)
 
-                if existing_recipe:
-                    print(f"Recipe with name {recipe_name} already exists. Skipping import.")
-                else:
-                    imported_recipe = Recipe(row[1], row[2].split(', '), row[3], row[4], row[5])
-                    self.recipes.append(imported_recipe)
-                    print(f"Imported recipe '{imported_recipe.name}' with ID {imported_recipe.id}.")
+                    if existing_recipe:
+                        print(f"Recipe with name {recipe_name} already exists. Skipping import.")
+                    else:
+                        imported_recipe = Recipe(row[1], row[2].split(', '), row[3], row[4], row[5])
+                        self.recipes.append(imported_recipe)
+                        print(f"Imported recipe '{imported_recipe.name}' with ID {imported_recipe.id}.")
 
-        print("Recipes imported successfully!")
+            print("Recipes imported successfully!")
+
+        except FileNotFoundError:
+            print("Error: The file 'recipes.csv' does not exist.")
+
 
     def main(self):
         while True:
@@ -231,4 +243,3 @@ class RecipeManagementSystem:
 if __name__ == "__main__":
     recipe_system = RecipeManagementSystem()
     recipe_system.main()
-
